@@ -6,9 +6,13 @@ from carregar import CarregarDados
 from gravar import GravarDados
 from transformar import TransformacaoBancos, TransformacaoEmpregados, TransformacaoReclamacoes
 
-pd.options.display.float_format = '{:.2f}'.format
+pd.options.display.float_format = '{:.2f}'.format # Define formato de exibição dos dados decimais no pandas dataframe
 
 if __name__ == "__main__":
+    """
+    Inicia a execução principal onde inicia-se um logger, captura-se o diretório corrente e é executado a carga de diversas tabelas,
+    suas transformações, a concatenação em um único dataframe via join e, por fim, a gravação em um diretório no formato fixo 'parquet'. 
+    """
     logger = logging.getLogger(__name__)
     logging.basicConfig(level=logging.INFO)
 
