@@ -1,5 +1,3 @@
-from abc import ABC, abstractmethod
-
 import pandas as pd
 
 
@@ -10,13 +8,7 @@ class TipoNaoSuportado(Exception):
         super().__init__(self.mensagem)
 
 
-class CarregarDados(ABC):
-    @abstractmethod
-    def carregar(self) -> pd.DataFrame:
-        pass
-
-
-class CarregarArquivo(CarregarDados):
+class CarregarDados():
     def __init__(self, diretorio_arquivos: list, tipo_arquivo: str, separador: str = ';'):
         self.diretorio_arquivos = diretorio_arquivos
         self.tipo_arquivo = tipo_arquivo

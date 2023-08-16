@@ -2,7 +2,7 @@ import pandas as pd
 import glob
 import os
 import logging
-from carregar import CarregarArquivo
+from carregar import CarregarDados
 from gravar import GravarDados
 from transformar import TransformacaoBancos, TransformacaoEmpregados, TransformacaoReclamacoes
 
@@ -14,17 +14,17 @@ if __name__ == "__main__":
 
     diretorio_atual = os.getcwd()
 
-    carregar_bancos = CarregarArquivo(
+    carregar_bancos = CarregarDados(
         diretorio_arquivos=[os.path.join(diretorio_atual, 'raw/Bancos/EnquadramentoInicia_v2.tsv')], tipo_arquivo='tsv',
         separador='\t')
     df_bancos_raw = carregar_bancos.carregar()
 
-    carregar_empregados = CarregarArquivo(
+    carregar_empregados = CarregarDados(
         diretorio_arquivos=glob.glob(os.path.join(diretorio_atual, 'raw/Empregados', "*.csv")), tipo_arquivo='csv',
         separador='|')
     df_empregados_raw = carregar_empregados.carregar()
 
-    carregar_reclamacoes = CarregarArquivo(
+    carregar_reclamacoes = CarregarDados(
         diretorio_arquivos=glob.glob(os.path.join(diretorio_atual, 'raw/Reclamações', "*.csv")), tipo_arquivo='csv',
         separador=';')
     df_reclamacoes_raw = carregar_reclamacoes.carregar()
