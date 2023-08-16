@@ -5,7 +5,13 @@ import pandas as pd
 
 
 class TransformarDados(ABC):
+    """
+    Reune funções gerais a todas as transformações
+    """
     def formatar_cnpj(self, valor):
+        """
+        Recebe dado int ou float e retorna a string com 8 caracteres, preenchidos com '0' a esquerda.
+        """
         if pd.notna(valor) and isinstance(valor, (int, float)):
             return f'{str(int(valor)).zfill(8)}'
         return ' '
@@ -16,10 +22,20 @@ class TransformarDados(ABC):
 
 
 class TransformacaoBancos(TransformarDados):
+    """
+    Funções para transformação do pandas dataframe de bancos.
+    """
     def __init__(self, df: pd.DataFrame):
+        """
+        Recebe o dataframe.
+        """
         self.df = df
 
     def transformar(self) -> pd.DataFrame:
+        """
+        Função para renomear (para snake_case), formatar e ajustar dados das colunas 'Segmento', 'CNPJ' e 'Nome'.
+        Retorna dataframe.
+        """
         df_transformado = self.df.rename(columns={
             'Segmento' : 'segmento',
             'CNPJ': 'cnpj',
@@ -31,10 +47,20 @@ class TransformacaoBancos(TransformarDados):
 
 
 class TransformacaoEmpregados(TransformarDados):
+    """
+    Funções para transformação do pandas dataframe de empregados.
+    """
     def __init__(self, df: pd.DataFrame):
+        """
+        Recebe o dataframe.
+        """
         self.df = df
 
     def transformar(self) -> pd.DataFrame:
+        """
+        Função para renomear (para snake_case), formatar e alterar tipos de dados.
+        Retorna dataframe.
+        """
         df_transformado = self.df.rename(columns={
             'employer-website' : 'employer_website',
             'employer-headquarters': 'employer_headquarters',
@@ -83,6 +109,10 @@ class TransformacaoEmpregados(TransformarDados):
         return df_transformado
 
     def analisar(self, df) -> pd.DataFrame:
+        """
+        Função para retornar um pandas dataframe de uma tabela agrupada (pivot) pela coluna nome,
+        agrupando pela média as colunas geral e remuneracao_beneficios.
+        """
         df_empregados_agrupado = df.groupby('nome', as_index=False).agg({
             'geral': 'mean',
             'remuneracao_beneficios': 'mean'
@@ -91,10 +121,20 @@ class TransformacaoEmpregados(TransformarDados):
 
 
 class TransformacaoReclamacoes(TransformarDados):
+    """
+    Funções para transformação do pandas dataframe de reclamações.
+    """
     def __init__(self, df: pd.DataFrame):
+        """
+        Recebe o dataframe.
+        """
         self.df = df
 
     def transformar(self) -> pd.DataFrame:
+        """
+        Função para renomear (para snake_case), formatar e alterar tipos de dados.
+        Retorna dataframe.
+        """
         df_transformado = self.df.rename(columns={
             'Ano' : 'ano',
             'Trimestre': 'trimestre',
@@ -130,6 +170,10 @@ class TransformacaoReclamacoes(TransformarDados):
         return df_transformado
 
     def analisar(self, df) -> pd.DataFrame:
+        """
+        Função para retornar um pandas dataframe de uma tabela agrupada (pivot) pela coluna nome,
+        agrupando pela média as colunas indice, qtd_total_reclamacoes e qtd_total_clientes_ccs_scr.
+        """
         df_reclamacoes_agrupado = df.groupby('nome', as_index=False).agg({
             'indice': 'mean',
             'qtd_total_reclamacoes': 'mean',
