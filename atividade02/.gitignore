@@ -3,3 +3,4 @@
 .atv2
 .idea
 *.parquet
+__pycache__
