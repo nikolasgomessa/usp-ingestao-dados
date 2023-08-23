@@ -4,3 +4,5 @@
 .idea
 *.parquet
 __pycache__
+*.pyc
+*.zip
