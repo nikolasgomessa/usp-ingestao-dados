@@ -1,5 +1,5 @@
 import json
-
+    
 class JSONLoader:
     @staticmethod
     def load_json(file_path, encoding='utf-8'):
