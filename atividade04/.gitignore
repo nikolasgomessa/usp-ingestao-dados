@@ -1,0 +1,10 @@
+*.venv
+*.csv
+*.tsv
+.atv2
+.idea
+*.parquet
+__pycache__
+*.pyc
+*.zip
+*.env
