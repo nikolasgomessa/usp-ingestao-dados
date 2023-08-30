@@ -1,6 +1,4 @@
 *.venv
-*.csv
-*.tsv
 .atv2
 .idea
 *.parquet
