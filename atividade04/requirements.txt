@@ -1,0 +1,5 @@
+boto3
+python-dotenv
+logging
+pyspark
+--upgrade jupyter boto3 aws-glue-sessions
