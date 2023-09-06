@@ -1,0 +1,48 @@
+{
+  "Comment": "Atividade 5",
+  "StartAt": "Inicio",
+  "States": {
+    "Inicio": {
+      "Type": "Pass",
+      "Result": "Início",
+      "Next": "Raw"
+    },
+    "Raw": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::glue:startJobRun.sync",
+      "Parameters": {
+        "JobName": "ingestion_raw"
+      },
+      "Next": "Trusted"
+    },
+    "Trusted": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::glue:startJobRun.sync",
+      "Parameters": {
+        "JobName": "transform_trusted"
+      },
+      "Next": "Delivery"
+    },
+    "Delivery": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::glue:startJobRun.sync",
+      "Parameters": {
+        "JobName": "transform_delivery"
+      },
+      "Next": "BancoRelacional"
+    },
+    "BancoRelacional": {
+      "Type": "Task",
+      "Resource": "arn:aws:states:::glue:startJobRun.sync",
+      "Parameters": {
+        "JobName": "relational_bd",
+        "Arguments": {
+          "--host": "$.host",
+          "--user": "$.user",
+          "--password": "$.password"
+        }
+      },
+      "End": true
+    }
+  }
+}
